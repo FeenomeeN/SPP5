@@ -44,6 +44,9 @@ interface ISmth
     }
 
 
+    interface IService
+    {
+    }
 
     class FirstIServiceImpl : IService
     {
