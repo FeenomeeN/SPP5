@@ -27,7 +27,7 @@ namespace DependencyInjectionContainer
 
         public DependencyProvider(DependenciesConfiguration configuration)
         {
-            
+            _configuration = configuration;
         }
 
         public TDependency Resolve<TDependency>()
