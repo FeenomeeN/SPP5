@@ -14,6 +14,9 @@ namespace DependencyInjectionContainer
 
         public ImplementationInfo(LifeTime lifeTime, Type impl)
         {
+            ImplementClassType = impl;
+            LifeTime = lifeTime;
+            isNullParam = false;
         }
 
     }
