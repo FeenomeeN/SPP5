@@ -24,6 +24,7 @@ where T : ISmth
     class Second<T> : IFoo<T>
         where T : IService
     {
+        
     }
 
     public interface IHuman
@@ -127,9 +128,11 @@ public interface SecondInterface { }
 public class SecondClass : SecondInterface
 {
     public ThirdInterface third { get; set; }
-    public SecondClass(ThirdInterface iThird)
+    public FirstInterface first { get; set; }
+    public SecondClass(ThirdInterface iThird, FirstInterface iFirst)
     {
-        this.third = iThird;
+       this.third = iThird;
+       this.first = iFirst;
     }
 }
 
@@ -138,8 +141,11 @@ public interface ThirdInterface { }
 public class ThirdClass : ThirdInterface
 {
     public FirstInterface first { get; set; }
-    public ThirdClass(FirstInterface iFirst)
+
+    public SecondInterface second { get; set; }
+    public ThirdClass(FirstInterface iFirst, SecondInterface iSecond)
     {
         this.first = iFirst;
+        this.second = iSecond;
     }
 }

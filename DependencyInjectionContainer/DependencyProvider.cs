@@ -20,7 +20,10 @@ namespace DependencyInjectionContainer
         private readonly Stack<Type> _recursionStackResolver = new Stack<Type>();
 
         //словарь тип-объект моков
-        public Dictionary<Type, object> mockedObjects = new Dictionary<Type, object>();
+        public List<object> objectList = new List<object>();
+      
+        public Dictionary<Type, List<object>> mockedObjects = new Dictionary<Type, List<object>>();
+        
         //название типа, объект. Содержит те объекты, которые прошли resolv
         public Dictionary<String, object> resolvedDictionary = new Dictionary<String, object>();
 
@@ -41,7 +44,7 @@ namespace DependencyInjectionContainer
             resolvedType = resolved.GetType();
             var interfaces = resolved.GetType().GetInterfaces();
             PropertyInfo[] propertyInfos = resolved.GetType().GetProperties();
-            Console.WriteLine("current object: " + resolved); ;
+            Console.WriteLine("current object: " + resolved); 
             for (int i = 0; i < propertyInfos.Length; i++)
             {
                 Console.WriteLine("fieldName: " + propertyInfos[i].Name + " fieldType: " + propertyInfos[i].PropertyType);
@@ -172,7 +175,7 @@ namespace DependencyInjectionContainer
                 {
                     if (IsDependency(parameter.ParameterType))
                     {
-                        //нашел А
+                        
                         object obj = Resolve(parameter.ParameterType);
                         Type parameterType = parameter.ParameterType;
 
@@ -182,10 +185,21 @@ namespace DependencyInjectionContainer
                             var type = typeof(Mock<>).MakeGenericType(parameterType);
                             mock = (Mock)Activator.CreateInstance(type);
                             obj = mock.Object;
-                            this.hasMock = true;
                             // mockedDictionary.Add(implInstance, obj);
                             //mocked.Add(obj);
-                            mockedObjects.Add(parameter.ParameterType, obj);
+                            
+                            if (mockedObjects.ContainsKey(parameter.ParameterType))
+                            {
+
+                                var listtmp = mockedObjects[parameter.ParameterType];
+                                listtmp.Add(obj);
+
+
+                            }
+                            else
+                            {
+                                mockedObjects.Add(parameter.ParameterType, new List<object>());
+                            }
                         }
                         paramsValues.Add(obj);
                     }
