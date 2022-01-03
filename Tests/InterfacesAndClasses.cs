@@ -35,22 +35,24 @@ where T : ISmth
     }
 }
 
-interface ISmth
-    {
-    }
+public interface ISmth
+{
+}
 
-    class ISmthImpl : ISmth
-    {
-    }
+class ISmthImpl : ISmth
+{
+}
+
+public interface IService
+{
+}
 
 
-    interface IService
-    {
-    }
 
-    class FirstIServiceImpl : IService
+
+    public class FirstIServiceImpl : IService
     {
-        public readonly ISmth Smth;
+        public ISmth Smth { get; set; }
 
         public FirstIServiceImpl()
         {
@@ -74,7 +76,7 @@ interface ISmth
 
     class IDataImpl : IData
     {
-        public readonly IClient Cl;
+        public IClient Cl { get; set; }
 
         public IDataImpl(IClient cl)
         {
@@ -90,7 +92,7 @@ interface ISmth
 
     class FirstIClientImpl : IClient
     {
-        public readonly IData Data;
+        public IData Data { get; set; }
 
         public FirstIClientImpl(IData data)
         {
@@ -110,3 +112,34 @@ interface ISmth
     }
 
 
+public interface FirstInterface { }
+public class FirstClass : FirstInterface
+{
+    public SecondInterface second { get; set; }
+    public FirstClass(SecondInterface iSecond)
+    {
+        this.second = iSecond;
+    }
+}
+
+
+public interface SecondInterface { }
+public class SecondClass : SecondInterface
+{
+    public ThirdInterface third { get; set; }
+    public SecondClass(ThirdInterface iThird)
+    {
+        this.third = iThird;
+    }
+}
+
+
+public interface ThirdInterface { }
+public class ThirdClass : ThirdInterface
+{
+    public FirstInterface first { get; set; }
+    public ThirdClass(FirstInterface iFirst)
+    {
+        this.first = iFirst;
+    }
+}
